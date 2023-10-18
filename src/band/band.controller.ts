@@ -1,9 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { CreateBandDto } from './dtos/createBand.dto';
 
 @Controller('band')
 export class BandController {
-  @Get()
-  async getBand() {
-    return JSON.stringify({ band: 'band1' });
-  }
+  @Post()
+  async createBand(@Body() createBand: CreateBandDto) {}
 }
