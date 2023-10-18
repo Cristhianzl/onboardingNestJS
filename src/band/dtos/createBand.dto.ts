@@ -3,5 +3,4 @@ export type CreateBandDto = {
   name: string;
   year_founded: number;
   genre: string;
-  favorite_instrument_brand: string;
 };
