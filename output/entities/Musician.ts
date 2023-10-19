@@ -1,31 +1,28 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Instrument } from "./Instrument";
 import { Band } from "./Band";
 
+@Index("PK_ac159e4cdf9e76ba7ffa934f8a6", ["id"], { unique: true })
 @Entity("musician", { schema: "public" })
 export class Musician {
-  @PrimaryGeneratedColumn({ type: "integer", name: "musician_id" })
-  musicianId: number;
+  @PrimaryGeneratedColumn({ type: "integer", name: "id" })
+  id: number;
 
   @Column("character varying", { name: "name" })
   name: string;
 
-  @Column("character varying", { name: "band" })
-  band: string;
+  @OneToMany(() => Instrument, (instrument) => instrument.musician)
+  instruments: Instrument[];
 
-  @Column("character varying", { name: "instrument" })
-  instrument: string;
-
-  @OneToOne(() => Instrument, (instrument) => instrument.instrument)
-  instrument2: Instrument;
-
-  @OneToOne(() => Band, (band) => band.musician)
-  @JoinColumn([{ name: "musician_id", referencedColumnName: "bandId" }])
-  musician: Band;
+  @ManyToOne(() => Band, (band) => band.musicians)
+  @JoinColumn([{ name: "band_id", referencedColumnName: "id" }])
+  band: Band;
 }

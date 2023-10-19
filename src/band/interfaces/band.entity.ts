@@ -1,10 +1,17 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { MusicianEntity } from './musician.entity';
 
+@Index('PK_e79403bf135719498a1c562a946', ['id'], { unique: true })
 @Entity('band', { schema: 'public' })
 export class BandEntity {
-  @PrimaryGeneratedColumn({ type: 'integer', name: 'band_id' })
-  bandId: number;
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
+  id: number;
 
   @Column('character varying', { name: 'name' })
   name: string;
@@ -15,6 +22,9 @@ export class BandEntity {
   @Column('character varying', { name: 'genre' })
   genre: string;
 
-  @OneToOne(() => MusicianEntity, (musician) => musician.musician)
-  musician: MusicianEntity;
+  //sempre colocar no OneToMany o cascade
+  @OneToMany(() => MusicianEntity, (musician) => musician.band, {
+    cascade: ['insert', 'update'],
+  })
+  musicians: MusicianEntity[];
 }

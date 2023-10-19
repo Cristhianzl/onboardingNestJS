@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { CreateBandDto } from './dtos/createBand.dto';
 import { BandService } from './band.service';
+import { BandEntity } from './interfaces/band.entity';
 
 @Controller('band')
 export class BandController {
