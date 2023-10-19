@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BandEntity } from './interfaces/band.entity';
 import { Repository } from 'typeorm';
+import { BandEntity } from './interfaces/band.entity';
 
 @Injectable()
 export class BandService {
@@ -29,7 +29,7 @@ export class BandService {
   }
 
   async getBand(id: number): Promise<BandEntity | null> {
-    const band = await this.bandRepository.findOneBy({ band_id: id });
+    const band = await this.bandRepository.findOneBy({ bandId: id });
 
     if (!band) {
       throw new NotFoundException(`Band with id ${id} not found`);
@@ -43,6 +43,6 @@ export class BandService {
     if (updatedBand.affected === 0) {
       throw new NotFoundException(`Band with id ${id} not found`);
     }
-    return await this.bandRepository.findOneBy({ band_id: id });
+    return await this.bandRepository.findOneBy({ bandId: id });
   }
 }

@@ -1,16 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { MusicianEntity } from './musician.entity';
 
-@Entity({ name: 'band' })
+@Entity('band', { schema: 'public' })
 export class BandEntity {
-  @PrimaryGeneratedColumn('rowid')
-  band_id: number;
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'band_id' })
+  bandId: number;
 
-  @Column({ name: 'name' })
+  @Column('character varying', { name: 'name' })
   name: string;
 
-  @Column({ name: 'year_founded' })
-  year_founded: number;
+  @Column('integer', { name: 'year_founded' })
+  yearFounded: number;
 
-  @Column({ name: 'genre' })
+  @Column('character varying', { name: 'genre' })
   genre: string;
+
+  @OneToOne(() => MusicianEntity, (musician) => musician.musician)
+  musician: MusicianEntity;
 }
