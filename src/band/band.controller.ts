@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -33,5 +34,13 @@ export class BandController {
   @Get(':band_id')
   async getBand(@Param('band_id') band_id: number) {
     return this.bandService.getBand(band_id);
+  }
+
+  @Patch(':band_id')
+  async updateBand(
+    @Param('band_id') band_id: number,
+    @Body() createBand: CreateBandDto,
+  ) {
+    return this.bandService.updateBand(band_id, createBand);
   }
 }

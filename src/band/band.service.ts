@@ -37,4 +37,12 @@ export class BandService {
 
     return band;
   }
+
+  async updateBand(id: number, band: BandEntity): Promise<BandEntity> {
+    const updatedBand = await this.bandRepository.update(id, band);
+    if (updatedBand.affected === 0) {
+      throw new NotFoundException(`Band with id ${id} not found`);
+    }
+    return await this.bandRepository.findOneBy({ band_id: id });
+  }
 }
